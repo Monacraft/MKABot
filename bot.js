@@ -26,6 +26,8 @@ By entering this server, you accept that this agreement represents the entire un
 `
 var welcomeText = `
 \`\`\`cs
+# Important Information:
+
 You have 10 minutes before you can interact with the members.
 Please take this time to read through the rules and fill out this little form that will help us in assigning you a role as well as help us find an appropriate time for all to hold the discussions.
 

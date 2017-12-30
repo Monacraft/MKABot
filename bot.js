@@ -32,6 +32,7 @@ client.on('ready', () => {
 });
 
 var shutdown = false;
+var devUser;
 client.on('message', msg => {
     if (msg.author.id === devID) {
         // This ID is set to Monacraft's ID
@@ -45,43 +46,42 @@ client.on('message', msg => {
                 msg.reply('Pong!')
             }
         }
-        if(msg.content === '!start')
-        {
+        if (msg.content === '!start') {
+            devUser = msg.author;
+            console.log(devUser);
             msg.delete();
             msg.channel.send("Starting Welcome Log");
         }
+        if (msg.content === "!test") {
+            console.log('Test Welcome... ' + devUser.username + " with ID: " + devUser.id);
+            var lm = client.user.lastMessage;
+            var thisChannel = lm.channel;
+            client.user.lastMessage.delete();
+            thisChannel.send(`Hello ${devUser} and welcome to the Medical Knowledge Association!`);
+            thisChannel.send(welcomeText);
+        }
     }
     if (msg.author.id === myID) {
-        if(shutdown)
-        {
+        if (shutdown) {
             process.exit();
         }
-        if(msg.content === "Starting Welcome Log")
-        {
-            oldmsg = msg;
-            started = 1;            
-            oldmsg.edit(welcomeText);
-        }
-        if(msg.content === welcomeText)
-        {
-            oldmsg = msg;
+        if (msg.content === "Starting Welcome Log") {
+            started = 1;
+            msg.edit(welcomeText);
         }
     }
 });
 client.on('guildMemberAdd', member => {
-    if(member.guild.id === guildID)
-    {
-        if(started === 1)
-        {
+    if (member.guild.id === guildID) {
+        if (started === 1) {
             console.log('Welcoming... ' + member.user.username + " with ID: " + member.user.id);
-            if(oldmsg !== '')
-            {
-                oldmsg.channel.send(`Hello ${member.user} and welcome to the Medical Knowledge Association!`);
-                oldmsg.delete();
-                oldmsg.channel.send(welcomeText);
-            } else {
-                console.log('Oldmsg not found :O');
-            }
+            var lm = client.user.lastMessage;
+            var thisChannel = lm.channel;
+            client.user.lastMessage.delete();
+            thisChannel.send(`Hello ${member.user} and welcome to the Medical Knowledge Association!`);
+            thisChannel.send(welcomeText);
+        } else {
+            console.log('Someone join but I was not started: ' + member.user.username + " : " + member.user.id);
         }
     }
 });

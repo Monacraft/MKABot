@@ -1,0 +1,23 @@
+{
+  "name": "mkabot",
+  "version": "1.0.0",
+  "description": "A discord bot for the MKA public discord written in Discord.js",
+  "main": "bot.js",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Monacraft/MKABot.git"
+  },
+  "author": "Monacraft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Monacraft/MKABot/issues"
+  },
+  "homepage": "https://github.com/Monacraft/MKABot#readme"
+}

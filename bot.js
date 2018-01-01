@@ -31,7 +31,7 @@ __** Important Information: **__
 
 You have 10 minutes before you can interact with the members.
 Please take this time to read through the #rules_faq and fill out this little form that will help us in assigning you a role as well as help us find an appropriate time for all to hold the discussions.
-goo.gl/forms/uLAYS1UfKPUSEwxY2
+http://goo.gl/forms/uLAYS1UfKPUSEwxY2
 
 Summary of rules:
 1. Asking for **medical advice**, whether through DMs or by asking them over here, is **strictly prohibited** and will **not** be tolerated. Any user who does so will be **immediately banned**.

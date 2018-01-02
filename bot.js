@@ -63,15 +63,17 @@ function autoKick(memberID) {
     for (var i = 0; i < notAccepted.length; i++) {
         if (notAccepted[i] === memberID) {
             var mem = client.guilds.get(guildID).members.get(memberID);
-            if (client.guilds.get(guildID).members.get(memberID).roles.get(rolePending) !== undefined) {
-                console.log("Autokicking: " + mem.user.username + " - " + mem.id);
-                mem.kick("You did not accept the terms and condition (please react tick next time)");
-                kickedCount += 1;
-                console.log("Kicked Count: " + kickedCount);
-            } else {
-                console.log(mem.id + ", role manuanly removed");
+            if (client.guilds.get(guildID).members.get(memberID) !== undefined) {
+                if (client.guilds.get(guildID).members.get(memberID).roles.get(rolePending) !== undefined) {
+                    console.log("Autokicking: " + mem.user.username + " - " + mem.id);
+                    mem.kick("You did not accept the terms and condition (please react tick next time)");
+                    kickedCount += 1;
+                    console.log("Kicked Count: " + kickedCount);
+                } else {
+                    console.log(mem.id + ", role manuanly removed");
+                }
+                notAccepted.splice(i, 1);
             }
-            notAccepted.splice(i, 1);
         }
     }
     console.log("Not Accepted Count: " + notAccepted.length);

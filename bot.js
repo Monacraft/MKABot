@@ -100,9 +100,6 @@ client.on('message', msg => {
                 shutdown = true;
                 msg.reply("Goodbye :')");
             }
-            if (msg.content === '!ping') {
-                msg.reply('Pong!')
-            }
         }
         if (msg.content === '!start' && started === 0) {
             devUser = msg.author;
@@ -123,6 +120,9 @@ client.on('message', msg => {
             msg.delete();
             msg.channel.send("Starting Welcome Log");
         }
+        if (msg.content === '!ping') {
+            msg.reply('Pong!')
+        }            
         if (msg.content === "!checkrole") {
             console.log(client.guilds.get(guildID).members.get(devID).roles.get(rolePending) !== undefined);
             console.log(client.guilds.get(guildID).members.get(devID).roles.get('21231313'));

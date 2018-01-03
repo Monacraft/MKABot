@@ -88,7 +88,9 @@ client.on('message', msg => {
 \`\`\`ml
  - Number Autokicked:   ${kickedCount}
  - Number Accepted:     ${acceptedCount}
- - Number Pending :     ${notAccepted.length}
+ - Number Length:       ${leftCount}
+ - Number Pending:      ${notAccepted.length}
+ - Still to Accept:     ${notAccepted.join(", ")}
 \`\`\``)
         msg.delete();
     }
@@ -122,7 +124,7 @@ client.on('message', msg => {
         }
         if (msg.content === '!ping') {
             msg.reply('Pong!')
-        }            
+        }
         if (msg.content === "!checkrole") {
             console.log(client.guilds.get(guildID).members.get(devID).roles.get(rolePending) !== undefined);
             console.log(client.guilds.get(guildID).members.get(devID).roles.get('21231313'));
@@ -215,6 +217,30 @@ client.on('guildMemberAdd', member => {
         } else {
             console.log('Someone joined but I was not started: ' + member.user.username + " : " + member.user.id);
         }
+    }
+});
+
+var leftCount = 0;
+client.on('guildMemberRemove', member => {
+    if (started === 1) {
+
+        var guild = client.guilds.get(guildID);
+        var removeAt = -1;
+        for (var i = 0; i < notAccepted.length; i++) {
+            if(notAccepted[i] === member.user.id) {
+                leftCount ++;
+                removeAt = i;
+            }
+        }
+        if(removeAt > 0) {
+            notAccepted.splice(removeAt, 1);
+            leftCount++;
+            console.log("Someone left");
+        }
+        console.log("Not Accepted Count: " + notAccepted.length);
+
+    } else {
+        console.log('Someone left but I was not started: ' + member.user.username + " : " + member.user.id);
     }
 });
 

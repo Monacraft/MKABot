@@ -75,7 +75,6 @@ client.on('ready', () => {
             roleAccept = roles[i].id;
         }
     }
-    welcomeChannel.messages.get(welcomeChannel.lastMessageID).delete();
     welcomeChannel.send("Starting Welcome Log");    
 
 });

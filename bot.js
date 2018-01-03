@@ -57,6 +57,26 @@ var token;
 client.on('ready', () => {
     client.user.setGame("Welcome to the MKA");
     console.log(`Logged in as ${client.user.tag}!`);
+
+
+    devUser = client.users.get(devID);
+    guildID = '237582214525616129'
+    storedGuild = client.guilds.get(guildID);
+    welcomeChannel = client.guilds.get(guildID).channels.get('389198025530015754');
+    // message.guild.channels.find("name", "channel-name");
+    console.log(devUser.username);
+    roles = storedGuild.roles.array();
+    //console.log(roles);
+    for (var i = 0; i < roles.length; i++) {
+        if (roles[i].name === rolePendingName) {
+            rolePending = roles[i].id;
+        }
+        if (roles[i].name === roleAcceptName) {
+            roleAccept = roles[i].id;
+        }
+    }
+    welcomeChannel.send("Starting Welcome Log");    
+
 });
 
 function autoKick(memberID) {
@@ -84,7 +104,7 @@ var storedGuild;
 client.on('message', msg => {
     if (msg.content === "!stats") {
         msg.reply(
-            `Some stats
+            `Bot Stat's (Reset every 24 hours): 
 \`\`\`ml
  - Number Autokicked:   ${kickedCount}
  - Number Accepted:     ${acceptedCount}
@@ -104,23 +124,6 @@ client.on('message', msg => {
             }
         }
         if (msg.content === '!start' && started === 0) {
-            devUser = msg.author;
-            welcomeChannel = msg.channel.id;
-            guildID = msg.guild.id;
-            storedGuild = msg.guild;
-            console.log(devUser.username);
-            roles = msg.guild.roles.array();
-            //console.log(roles);
-            for (var i = 0; i < roles.length; i++) {
-                if (roles[i].name === rolePendingName) {
-                    rolePending = roles[i].id;
-                }
-                if (roles[i].name === roleAcceptName) {
-                    roleAccept = roles[i].id;
-                }
-            }
-            msg.delete();
-            msg.channel.send("Starting Welcome Log");
         }
         if (msg.content === '!ping') {
             msg.reply('Pong!')
@@ -207,7 +210,7 @@ client.on('guildMemberAdd', member => {
             notAccepted.push(member.user.id);
             console.log("Not Accepted Count: " + notAccepted.length);
 
-            setTimeout(autoKick, 60000 * 60 * 24, member.user.id);
+            setTimeout(autoKick, 60000 * 60, member.user.id);
 
             thisChannel.send(`⭐ Hello ${member.user} and welcome to the Medical Knowledge Association!`);
             thisChannel.send("Welcome Log");

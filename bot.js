@@ -63,6 +63,20 @@ client.on('ready', () => {
     guildID = '237582214525616129'
     storedGuild = client.guilds.get(guildID);
     welcomeChannel = client.guilds.get(guildID).channels.get('389198025530015754');
+    client.guilds.get('237582214525616129').channels.get('389198025530015754').fetchMessages({limit: 10}).then(
+        messages => {
+            messages.map(function(obj) {
+                if(obj.content.substring(0, 9) === welcomeText.substring(1,10) && obj.author.id === myID)
+                {
+                    client.guilds.get('237582214525616129').channels.get('389198025530015754').fetchMessage(obj.id).then(
+                        msg => {
+                            msg.delete();
+                        }
+                    ).catch(console.error)
+                }
+            })
+        }
+    ).catch(console.error);
     // message.guild.channels.find("name", "channel-name");
     console.log(devUser.username);
     roles = storedGuild.roles.array();
@@ -203,17 +217,14 @@ client.on('guildMemberAdd', member => {
         if (started === 1) {
             console.log('Welcoming... ' + member.user.username + " with ID: " + member.user.id);
 
-            var guild = client.guilds.get(guildID);
-            var thisChannel = guild.channels.get(welcomeChannel);
-
             member.addRole(rolePending);
             notAccepted.push(member.user.id);
             console.log("Not Accepted Count: " + notAccepted.length);
 
             setTimeout(autoKick, 60000 * 60, member.user.id);
 
-            thisChannel.send(`⭐ Hello ${member.user} and welcome to the Medical Knowledge Association!`);
-            thisChannel.send("Welcome Log");
+            welcomeChannel.send(`⭐ Hello ${member.user} and welcome to the Medical Knowledge Association!`);
+            welcomeChannel.send("Welcome Log");
 
             member.user.send(dmText);
 

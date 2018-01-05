@@ -153,7 +153,6 @@ client.on('message', msg => {
             console.log('Test Welcome... ' + devUser.username + " with ID: " + devUser.id);
 
             var guild = client.guilds.get(guildID);
-            var thisChannel = guild.channels.get(welcomeChannel);
 
             msg.guild.fetchMember(msg.author.id).then(member => {
                 member.addRole(rolePending);
@@ -162,8 +161,8 @@ client.on('message', msg => {
                 console.log("Would autokick");
             });
             //setTimeout(autoKick, 60000 * 2, member.user.id);
-            thisChannel.send(`⭐ Hello ${msg.author.username} and welcome to the Medical Knowledge Association!`);
-            thisChannel.send("Welcome Log");
+            welcomeChannel.send(`⭐ Hello ${msg.author.username} and welcome to the Medical Knowledge Association!`);
+            welcomeChannel.send("Welcome Log");
             msg.author.send(dmText);
             msg.delete();
         }

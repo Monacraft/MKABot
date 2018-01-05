@@ -84,9 +84,11 @@ client.on('ready', () => {
     for (var i = 0; i < roles.length; i++) {
         if (roles[i].name === rolePendingName) {
             rolePending = roles[i].id;
+            console.log(roles[i].name + ": " + rolePending)
         }
         if (roles[i].name === roleAcceptName) {
             roleAccept = roles[i].id;
+            console.log(roles[i].name + ": " + roleAccept)            
         }
     }
     welcomeChannel.send("Starting Welcome Log");    

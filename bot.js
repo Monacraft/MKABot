@@ -63,11 +63,10 @@ client.on('ready', () => {
     guildID = '237582214525616129'
     storedGuild = client.guilds.get(guildID);
     welcomeChannel = client.guilds.get(guildID).channels.get('389198025530015754');
-    client.guilds.get('237582214525616129').channels.get('389198025530015754').fetchMessages({limit: 10}).then(
+    client.guilds.get('237582214525616129').channels.get('389198025530015754').fetchMessages({ limit: 10 }).then(
         messages => {
-            messages.map(function(obj) {
-                if(obj.content.substring(0, 9) === welcomeText.substring(1,10) && obj.author.id === myID)
-                {
+            messages.map(function (obj) {
+                if (obj.content.substring(0, 9) === welcomeText.substring(1, 10) && obj.author.id === myID) {
                     client.guilds.get('237582214525616129').channels.get('389198025530015754').fetchMessage(obj.id).then(
                         msg => {
                             msg.delete();
@@ -88,10 +87,10 @@ client.on('ready', () => {
         }
         if (roles[i].name === roleAcceptName) {
             roleAccept = roles[i].id;
-            console.log(roles[i].name + ": " + roleAccept)            
+            console.log(roles[i].name + ": " + roleAccept)
         }
     }
-    welcomeChannel.send("Starting Welcome Log");    
+    welcomeChannel.send("Starting Welcome Log");
 
 });
 
@@ -125,8 +124,7 @@ client.on('message', msg => {
  - Number Autokicked:   ${kickedCount}
  - Number Accepted:     ${acceptedCount}
  - Number Length:       ${leftCount}
- - Number Pending:      ${notAccepted.length}
- - Still to Accept:     ${notAccepted.join(", ")}
+ - Number Pending:      [Autokicking is disabled]
 \`\`\``)
         msg.delete();
     }
@@ -156,8 +154,8 @@ client.on('message', msg => {
 
             msg.guild.fetchMember(msg.author.id).then(member => {
                 member.addRole(rolePending);
-                notAccepted.push(member.user.id);
-                console.log("Not Accepted Count: " + notAccepted.length);
+                //notAccepted.push(member.user.id);
+                //console.log("Not Accepted Count: " + notAccepted.length);
                 console.log("Would autokick");
             });
             //setTimeout(autoKick, 60000 * 2, member.user.id);
@@ -191,20 +189,13 @@ client.on('message', msg => {
         if (msg.author.id !== myID) {
             if (msg.content === acceptText) {
                 exec = true;
-                for (var a = 0; a < notAccepted.length; a++) {
-                    //console.log(r.id + " : " + notAccepted[a]);
-                    if (msg.author.id === notAccepted[a]) {
-                        //var m = react.message.guild.members.get(r[u].id);
-                        client.guilds.get(guildID).fetchMember(msg.author.id).then(member => {
-                            member.removeRole(rolePending);
-                            console.log(member.user.username + " accepted conditions");
-                            member.addRole(roleAccept);
-                            acceptedCount++;
-                            msg.author.send(acceptMsg);
-                        });
-                        notAccepted.splice(a, 1);
-                    }
-                }
+                client.guilds.get(guildID).fetchMember(msg.author.id).then(member => {
+                    member.removeRole(rolePending);
+                    console.log(member.user.username + " accepted conditions");
+                    member.addRole(roleAccept);
+                    acceptedCount++;
+                    msg.author.send(acceptMsg);
+                });
             } else {
                 if (!exec) {
                     msg.author.send(failMsg);
@@ -219,8 +210,8 @@ client.on('guildMemberAdd', member => {
             console.log('Welcoming... ' + member.user.username + " with ID: " + member.user.id);
 
             member.addRole(rolePending);
-            notAccepted.push(member.user.id);
-            console.log("Not Accepted Count: " + notAccepted.length);
+            // notAccepted.push(member.user.id);
+            //console.log("Not Accepted Count: " + notAccepted.length);
 
             //setTimeout(autoKick, 60000 * 60, member.user.id);
 
@@ -241,7 +232,7 @@ client.on('guildMemberRemove', member => {
 
         var guild = client.guilds.get(guildID);
         var removeAt = -1;
-        for (var i = 0; i < notAccepted.length; i++) {
+        /*for (var i = 0; i < notAccepted.length; i++) {
             if(notAccepted[i] === member.user.id) {
                 leftCount ++;
                 removeAt = i;
@@ -249,10 +240,11 @@ client.on('guildMemberRemove', member => {
         }
         if(removeAt > 0) {
             notAccepted.splice(removeAt, 1);
-            leftCount++;
-            console.log("Someone left");
-        }
-        console.log("Not Accepted Count: " + notAccepted.length);
+            leftCount++;*/
+        console.log("Someone left");
+        leftCount++;
+        // }
+        //console.log("Not Accepted Count: " + notAccepted.length);
 
     } else {
         console.log('Someone left but I was not started: ' + member.user.username + " : " + member.user.id);

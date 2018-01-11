@@ -222,7 +222,7 @@ client.on('guildMemberAdd', member => {
             notAccepted.push(member.user.id);
             console.log("Not Accepted Count: " + notAccepted.length);
 
-            setTimeout(autoKick, 60000 * 60, member.user.id);
+            //setTimeout(autoKick, 60000 * 60, member.user.id);
 
             welcomeChannel.send(`⭐ Hello ${member.user} and welcome to the Medical Knowledge Association!`);
             welcomeChannel.send("Welcome Log");
